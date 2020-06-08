@@ -310,14 +310,16 @@
 #include <mutex>
 #include <thread>
 
-#include <BaseTsd.h>
+#include <basetsd.h>
 typedef SSIZE_T ssize_t;
 
+#ifndef NOMINMAX
 #define NOMINMAX
-#include <Windows.h>
+#endif
+#include <windows.h>
 #include <winnt.h>
 
-#include <Psapi.h>
+#include <psapi.h>
 #include <signal.h>
 
 #ifndef __clang__
@@ -4016,8 +4018,8 @@ public:
     signal(SIGABRT, signal_handler);
     _set_abort_behavior(0, _WRITE_ABORT_MSG | _CALL_REPORTFAULT);
 
-    set_terminate(&terminator);
-    set_unexpected(&terminator);
+    std::set_terminate(&terminator);
+    std::set_unexpected(&terminator);
     _set_purecall_handler(&terminator);
     _set_invalid_parameter_handler(&invalid_parameter_handler);
   }
